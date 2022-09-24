@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+</head>
+<style>
+    .example {
+        text-align: center;
+        margin-top: 200px;
+    }
+
+    .title {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .box {
+        margin-top: 30px;
+    }
+</style>
+
+<body>
+    <div class="example">
+        <div class="title">图片上传压缩例子</div>
+        <input type="file" name="file" id="file">
+        <div class="box">
+            压缩前大小(b): <span id="prev" style="margin-right: 40px"></span>
+            压缩后大小(b): <span id="next"></span>
+        </div>
+    </div>
+
+    <script type="module">
+        import compress from '/dist/index.es.js'
+        const file = document.getElementById('file');
+        file.addEventListener('change', async () => {
+            const prev = document.getElementById('prev')
+            const next = document.getElementById('next')
+            prev.innerHTML = ""
+            next.innerHTML = ""
+            const f = file.files[0]
+            const fileSize = f.size / 1024 / 1024;
+            prev.innerHTML = f.size
+            const quality = 1 / (Math.ceil(fileSize) + 4);
+            const compressImageFile = await compress(f, quality)
+            next.innerHTML = compressImageFile.size
+            file.value = ""
+        })
+
+
+    </script>
+</body>
+
+</html>
