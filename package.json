@@ -1,7 +1,7 @@
 {
   "name": "simple-image-compression",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Compress images in the browser",
   "keywords": [
