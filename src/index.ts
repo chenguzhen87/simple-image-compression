@@ -18,11 +18,13 @@ export default function compressImageFile(imageFile: File, quality = 0.9) {
       const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
       ctx.drawImage(image, 0, 0, width, height);
       canvas.toBlob((blob) => {
+        URL.revokeObjectURL(objectURL)
         blob ? resolve(blob) : reject(new Error('Failed'))
       }, imageFile.type, quality)
     }
 
     image.onerror = (error) => {
+      URL.revokeObjectURL(objectURL)
       reject(error || new Error('Failed'))
     }
 
